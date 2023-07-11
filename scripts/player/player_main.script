@@ -611,7 +611,7 @@
 //	}
 //}
 
-{ game_learnskill //1: Skill name (buggy-keeps spaces)  2: Subskill name 3: Skill value (buggy-oft returns 0)
+{ game_learnskill //1: Skill name (buggy-keeps spaces)  2: Subskill name 3: Skill value 4: Should show level up effects (buggy-oft returns 0)
 	
 	gplayermessage ent_me "Level awarded to" PARAM1 PARAM2
 
@@ -629,11 +629,14 @@
 
 	infomsg all TITLE_STRING MESSAGE_STRING
 
-	playsound 0 10 SOUND_LEVELUP1 //SOUND_LEVELUP2
+	if ( $int(PARAM4) > 0 )
+	{
+		playsound 0 10 SOUND_LEVELUP1 //SOUND_LEVELUP2
 
-	clientevent new all player/player_conartist levelup $get(ent_me,index)
-	setvard LEVEL_UP_SCRIPT game.script.last_sent_id
-	//dbg LevelupID LEVEL_UP_SCRIPT
+		clientevent new all player/player_conartist levelup $get(ent_me,index)
+		setvard LEVEL_UP_SCRIPT game.script.last_sent_id
+		//dbg LevelupID LEVEL_UP_SCRIPT
+	}
 }
 
 { [server] reset_send_dmg_delay
